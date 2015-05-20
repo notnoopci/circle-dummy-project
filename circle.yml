@@ -1,1 +1,18 @@
 # empty
+#
+test:
+  override:
+    - pwd:
+        pwd: a
+    - pwd:
+        pwd: a
+    - pwd:
+        pwd: a/../b
+    - pwd:
+        pwd: /
+    - pwd:
+        pwd: //
+    - pwd:
+        pwd: /tmp
+    - pwd:
+        pwd: ..
