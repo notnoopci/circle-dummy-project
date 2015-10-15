@@ -1,1 +1,25 @@
-# empty
+machine:
+  ruby:
+    version: 2.2.2
+
+  services:
+    - docker
+
+  environment:
+    APP_ENV: test
+    RACK_ENV: test
+    DATABASE_URI: postgres://ubuntu:@127.0.0.1:5432
+    DATABASE_NAME: circle_test
+
+dependencies:
+  bundler:
+
+test:
+  override:
+    - bundle exec rubocop
+    - bundle exec rspec spec
+
+  post:
+    - docker info
+    - docker build -t engineering/town-crier .
+
