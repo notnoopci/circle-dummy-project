@@ -1,1 +1,4 @@
 # empty
+test:
+  override:
+    - ./mytest.sh
