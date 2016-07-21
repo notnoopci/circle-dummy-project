@@ -1,0 +1,21 @@
+experimental:
+  nextgen:
+    ExecutorType: docker
+    ContainerInfo:
+      - Image: golang:1.6.2
+    TaskInfo:
+      CheckoutDir: /go/src/github.com/circleci/build-agent
+    Stages:
+      build:
+        Steps:
+          - type: shell
+            command: mkdir /tmp/my-test
+            shell: /bin/sh
+            pwd: /tmp
+          - type: shell
+            command: echo hihihi > /tmp/my-test/sample-artifact; ls /tmp/my-test
+            shell: /bin/sh
+            pwd: /tmp
+          - type: artifacts-store
+            path: /tmp/my-test
+            destination: binaries
