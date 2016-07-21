@@ -8,14 +8,16 @@ experimental:
     Stages:
       build:
         Steps:
+          - type: checkout
           - type: shell
-            command: mkdir /tmp/my-test
+            command: |
+              mkdir /tmp/my-test && \
+              cp tests.json /tmp/my-test && \
+              echo hihihi > /tmp/my-test/sample-artifact && \
+              ls /tmp/my-test
             shell: /bin/sh
-            pwd: /tmp
-          - type: shell
-            command: echo hihihi > /tmp/my-test/sample-artifact; ls /tmp/my-test
-            shell: /bin/sh
-            pwd: /tmp
           - type: artifacts-store
             path: /tmp/my-test
             destination: binaries
+          - type: set-test-reports
+            path: binaries/tests.json
