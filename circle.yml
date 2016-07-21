@@ -1,1 +1,4 @@
 # empty
+test:
+  override:
+    - for n in $(seq 1 1000); do echo hello $n > $CIRCLE_ARTIFACTS/file-$n; done
