@@ -1,1 +1,9 @@
-# empty
+dependencies:
+  override:
+    - ls -lha ~
+    - mkdir -p ~/gradle_with_rx && chmod 755 ~/gradle_with_rx && echo hihi > ~/gradle_with_rx/test
+    - mkdir -p ~/gradle_without_rx && chmod 750 ~/gradle_without_rx && echo hihi > ~/gradle_without_rx/test
+    - ls -lha ~
+  cache_directories:
+    - "~/gradle_with_rx"
+    - "~/gradle_without_rx"
