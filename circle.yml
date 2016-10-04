@@ -1,18 +1,18 @@
 experimental:
-  nextgen:
-    ExecutorType: docker
-    ContainerInfo:
-      - Image: golang:1.6.2
-    TaskInfo:
-      CheckoutDir: /tmp
-    Stages:
+  picard:
+    executorType: docker
+    containerInfo:
+      - image: golang:1.6.2
+    taskInfo:
+      checkoutDir: /tmp
+    stages:
       build:
-        Steps:
-          - type: shell
-            name: stdout routing
-            command: |
-              echo "this should go to stdout"
+        steps:
           - type: shell
             name: stderr routing
             command: |
               >&2 echo "this should go to stderr"
+          - type: shell
+            name: stdout routing
+            command: |
+              echo "this should go to stdout"
