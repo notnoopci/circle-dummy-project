@@ -16,3 +16,5 @@ experimental:
             name: stdout routing
             command: |
               echo "this should go to stdout"
+              >&2 echo "then this should go to stderr"
+              echo "this final line goes to stdout"
