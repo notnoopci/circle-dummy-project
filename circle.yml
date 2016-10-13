@@ -27,6 +27,8 @@ experimental:
           - type: shell
             name: test that docker is up
             command: |
-              set -ex
-              sleep 4
-              docker exec dockercomposehelloworld_web_1 curl --retry 10 http://localhost:8080/
+              docker ps
+              sleep 10
+              docker ps
+              docker logs picarddummy_web_1
+              docker exec picarddummy_web_1 curl http://localhost:8080/
