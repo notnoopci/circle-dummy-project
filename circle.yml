@@ -1,23 +1,32 @@
 experimental:
-  nextgen:
-    ExecutorType: docker
-    ContainerInfo:
-      - Image: golang:1.6.2
-    TaskInfo:
-      CheckoutDir: /go/src/github.com/circleci/build-agent
-    Stages:
+  picard:
+    executorType: machine
+    machineInfo:
+      digitalocean:
+        image: "20250992"
+        region: nyc3
+        access-token: 3138a9b186d9f1063d0877a4c14ef3b7f7c476ceb744ebba0c8b1a4aa717dbe0
+    stages:
       build:
-        Steps:
+        workDir: /tmp/picard-dummy
+        steps:
           - type: checkout
           - type: shell
+            name: install docker-compose
             command: |
-              mkdir /tmp/my-test && \
-              cp tests.json /tmp/my-test && \
-              echo hihihi > /tmp/my-test/sample-artifact && \
-              ls /tmp/my-test
-            shell: /bin/sh
-          - type: artifacts-store
-            path: /tmp/my-test
-            destination: binaries
-          - type: set-test-reports
-            path: binaries/tests.json
+              set -ex
+              curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+              chmod +x /usr/local/bin/docker-compose
+              docker-compose --version
+              docker info
+          - type: shell
+            name: spin up docker containers
+            command: |
+              set -ex
+              docker-compose up -d
+          - type: shell
+            name: test that docker is up
+            command: |
+              set -ex
+              sleep 4
+              docker exec dockercomposehelloworld_web_1 curl -sSL --fail http://localhost:8080/
