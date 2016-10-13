@@ -29,4 +29,4 @@ experimental:
             command: |
               set -ex
               sleep 4
-              docker exec dockercomposehelloworld_web_1 curl -sSL --fail http://localhost:8080/
+              docker exec dockercomposehelloworld_web_1 curl --retry 10 http://localhost:8080/
