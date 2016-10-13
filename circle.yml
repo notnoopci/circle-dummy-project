@@ -27,8 +27,12 @@ experimental:
           - type: shell
             name: test that docker is up
             command: |
+              set -ex
               docker ps
               sleep 10
               docker ps
               docker logs picarddummy_web_1
-              docker exec picarddummy_web_1 curl http://localhost:8080/
+              echo we should see a counter of the curl here
+              docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
+              docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
+              docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
