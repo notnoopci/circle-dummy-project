@@ -1,38 +1,49 @@
 experimental:
   picard:
-    executorType: machine
-    machineInfo:
-      digitalocean:
-        image: "20250992"
-        region: nyc3
-        access-token: 3138a9b186d9f1063d0877a4c14ef3b7f7c476ceb744ebba0c8b1a4aa717dbe0
     stages:
       build:
+        executorType: machine
+        machineInfo:
+          google:
+            machine-image: https://www.googleapis.com/compute/v1/projects/notnoopci-prototype/global/images/ubuntu-1604-docker-1477184140
+            username: ubuntu
+            project: notnoopci-prototype
+            credentials: |
+              {
+                "type": "service_account",
+                "project_id": "notnoopci-prototype",
+                "private_key_id": "254c7d319a22306d8b869d26211086145ea7a06f",
+                "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCYNY/jq9jPVFPk\nzmSJ3L7QkPYISds79m0LcdHYG64qFqTfHvl/S2vLB+K1c/ALy9dMlxlvVjvIj+D0\nWr+JyWN7uLHmh87XRe4BWrRNd4yQmwDmyAKsKGxFLW5yG3QXz0/VMhySZxgxi0Bf\nX9CkrQEsPWzxMortVQ0KMC7Ge3pFNAYk4DtapDIT0Y5nNuZlh3e+qKDRdWSI9GFK\ng9klJR3ANly0paInFaIpaOD1FBQaYcamDpDal/mINlB9YI/DVmk7MnrwmIszrCCi\nTL8nhlJtbmyDkJeQa05bEgXOd9+58laMRAMyv7MZfAV3EP7rRYDjWCfRTi4e25Fl\nEMdwTLobAgMBAAECggEAUqhTuanrFbyPyqOiyZNNNGpkkd+55PhQA3UOJjPyAv1F\nD738c/p7UUi4/x008NMD2p37vBCyappn6YsWlTb+hYOpaK270AAz3hxp6d/QP/9N\nIAbiHKffFDo1zlXGV9/HVNnf1kmSQ+WBUcnwvl0NU/8PmHSAKZ6UdEHyROttXQKr\nFOss15qdmbw2kX5jtp0FshnsQoS8uVq4MNqftbWxnplGxeePTYPbVcSBwz12YszD\ntsgmIP4zc89asZYHy2hcD0+bV6Pc5pZs/U0fffW2zzqeN7Z3orDsPUeo/TwdfI+B\nJKRoJnLJ7cVNaiI87sI4P2R6jnWE5U2sIChXqV848QKBgQDKXfoOvnh7NV+XlDYt\nQbWEkZzZ4ig73N1hwI0EVH9pD115ydwYOrdGmgCr22RSEoBmU7pKOfFvCP9Pq5bR\nV31FKUjPSOq4bVl8q7m8NSSKp/sMKTqekfTJYO522KzuQB/aTIV+Q+0b2GXnGrJz\n+eqppYqgLUTI7oqdDKBp1NBj/QKBgQDAjITEl9vc7pLDH3GHsBQ1u3EnMFG5hlv0\nMP6ySTxN0GABPAXhLnMnXsiGhvupV6g+2TbDdiqHqa09Fx+pb6FxH8TaFZDCdSlX\nVKEpZJk/WxlAbYWcDTvCk6c/HGz/QLsumzp6cHaLzIWLZZfgv50q7Y1anrpKe3cG\nK8f+ElKV9wKBgQCP0M+4ELbw4NKJl8QUz6DfkNhGpAnx2RnfsYbGMALIOCo3NjTb\nZ0b+vs2BVQ5roUhs8E3xGFKzlVJUXV52cdXOA/QBlBFzdgrlpej+j0nj3FN2pgpJ\nzPKI9wEhpwTm4N2CN2WbgUyNwHFTF08BSvfxDnuBMAq1PYl26RVLgPmERQKBgHWY\nHCnYuO1YQwep93MwBVe/j16osvDEbvpWxeZqtcqsPUXju4+IB8n+qCcI3z/QCi/A\nByMe0uChruzFZ4/aXlWxWk76prssRMBSLk8SYkmAQI7JlLT2nA28kYMIwESv6uGO\n6gsHDk9Y7CJzPGuFet5R0GeM0ydT+iApsu2nkQqHAoGAOmJpkvdMEsA7arIq/z4Z\n6a7clCmV2Tf1T/N88H9ldF/oDWfComJ/ZFAvzoxbmg90ty5cz5HHl/Jy7SG7Qw0U\nZJaAe8OX5gIYEDxCzwqGtt9eBy2sCw/gIAtbjU4y0EBEncyx9LxoCSf3slZiI8KB\nWTr+i13IO9QuhP8/WToVfyY=\n-----END PRIVATE KEY-----\n",
+                "client_email": "1090044091394-compute@developer.gserviceaccount.com",
+                "client_id": "114315730436238142924",
+                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                "token_uri": "https://accounts.google.com/o/oauth2/token",
+                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/1090044091394-compute%40developer.gserviceaccount.com"
+              }
         workDir: /tmp/picard-dummy
         steps:
           - type: checkout
           - type: shell
-            name: install docker-compose
+            name: check docker
             command: |
               set -ex
-              curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-              chmod +x /usr/local/bin/docker-compose
-              docker-compose --version
-              docker info
+              sudo docker info
+              sudo docker-compose --version
           - type: shell
             name: spin up docker containers
             command: |
               set -ex
-              docker-compose up -d
+              sudo docker-compose up -d
           - type: shell
             name: test that docker is up
             command: |
               set -ex
-              docker ps
-              sleep 10
-              docker ps
-              docker logs picarddummy_web_1
-              echo we should see a counter of the curl here
-              docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
-              docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
-              docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
+              sudo docker ps
+              sleep 5
+              sudo docker ps
+              sudo docker logs picarddummy_web_1
+              sudo echo we should see a counter of the curl here
+              sudo docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
+              sudo docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
+              sudo docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
