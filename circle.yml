@@ -8,6 +8,7 @@ experimental:
             machine-image: https://www.googleapis.com/compute/v1/projects/notnoopci-prototype/global/images/ubuntu-1604-docker-1477184140
             username: ubuntu
             project: notnoopci-prototype
+            preemptible: true
             credentials: |
               {
                 "type": "service_account",
