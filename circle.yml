@@ -1,15 +1,24 @@
 experimental:
   picard:
+    version: 0.1
+    executorType: docker
+    containerInfo:
+      - image: docker:latest
     stages:
       build:
-        executorType: machine
+        executorType: docker
         machineInfo:
-          google:
-            machine-image: https://www.googleapis.com/compute/v1/projects/notnoopci-prototype/global/images/ubuntu-1604-docker-1477184140
-            username: ubuntu
-            project: notnoopci-prototype
-            preemptible: true
-            credentials: |
+          virtualbox:
+            anything: yes
+        containerInfo:
+          - image: docker:latest
+        workDir: /tmp
+        steps:
+          - type: setup-docker-engine
+            driver: google
+            google-machine-image: https://www.googleapis.com/compute/v1/projects/notnoopci-prototype/global/images/ubuntu-1604-docker-1478183775
+            google-project: notnoopci-prototype
+            google-credentials: |
               {
                 "type": "service_account",
                 "project_id": "notnoopci-prototype",
@@ -22,29 +31,15 @@ experimental:
                 "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
                 "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/1090044091394-compute%40developer.gserviceaccount.com"
               }
-        workDir: /tmp/picard-dummy
-        steps:
-          - type: checkout
+
           - type: shell
-            name: check docker
+            name: docker info
+            pwd: /tmp
+            shell: /bin/sh
             command: |
-              set -ex
-              sudo docker info
-              sudo docker-compose --version
-          - type: shell
-            name: spin up docker containers
-            command: |
-              set -ex
-              sudo docker-compose up -d
-          - type: shell
-            name: test that docker is up
-            command: |
-              set -ex
-              sudo docker ps
-              sleep 5
-              sudo docker ps
-              sudo docker logs picarddummy_web_1
-              sudo echo we should see a counter of the curl here
-              sudo docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
-              sudo docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
-              sudo docker exec picarddummy_web_1 curl -sSL http://localhost:8080/
+              set -eux
+              hostname
+              uname -a
+              docker version
+              docker info
+              docker run --rm -it alpine uname -a
