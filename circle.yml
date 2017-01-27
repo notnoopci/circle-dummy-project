@@ -1,22 +1,10 @@
-experimental:
-  picard:
+
+version: 2
+jobs:
+  build:
     executorType: docker
     containerInfo:
-      - image: golang:1.6.2
-    stages:
-      build:
-        workDir: /tmp/sample-repo
-        steps:
-          - type: checkout
-          - type: shell
-            name: stderr routing
-            command: |
-              ls -lha
-              pwd
-              >&2 echo "this should go to stderr"
-          - type: shell
-            name: stdout routing
-            command: |
-              echo "this should go to stdout"
-              >&2 echo "then this should go to stderr"
-              echo "this final line goes to stdout"
+      - image: notnoopciasdfsafds/golang:1.78
+    workDir: /tmp
+    steps:
+      - type: checkout
