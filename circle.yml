@@ -2,6 +2,17 @@
 machine:
   post:
   - pwd
-test:
+dependencies:
+  pre:
+  - pwd
+  - echo config pre dependencies
+  override:
+  - echo config override dependencies
   post:
+  - echo config post dependencies
+test:
+  override:
+   - echo from config
+  post:
+  - echo config post test
   - pwd
