@@ -1,1 +1,7 @@
 # empty
+machine:
+  post:
+  - pwd
+test:
+  post:
+  - pwd
