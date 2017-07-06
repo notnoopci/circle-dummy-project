@@ -1,17 +1,16 @@
 version: 2
-executorType: docker
-containerInfo:
-  - image: golang:1.7
+build_agent: picard:0.0.0-1c7c162
 jobs:
   build:
-    executorType: docker
-    containerInfo:
-      - image: golang:1.7
-    workDir: /go/src/github.com/circleci/build-agent
+    docker:
+    - image: golang:1.7
+
+    working_directory: /go/src/github.com/circleci/build-agent
 
     steps:
       - type: setup-docker-engine
         reusable: true
+        version: 17.05.0-ce
         
       - type: shell
         name: Install docker 1.12
