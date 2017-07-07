@@ -1,5 +1,4 @@
 version: 2
-build_agent: picard:0.0.0-79f826b
 jobs:
   build:
     docker:
@@ -8,10 +7,10 @@ jobs:
     working_directory: /go/src/github.com/circleci/build-agent
 
     steps:
-      - type: setup-docker-engine
+    - setup-docker-engine:
         version: 17.05.0-ce
         
-      - type: shell
+    - run:
         name: Install docker 1.12
         command: |
           set -ex
@@ -19,4 +18,5 @@ jobs:
           tar -xz -C /tmp -f /tmp/docker-1.12.3.tgz
           mv /tmp/docker/* /usr/bin
 
-      - shell: docker info
+    - run : docker info
+    - run : docker info
