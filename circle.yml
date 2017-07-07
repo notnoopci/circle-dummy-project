@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - setup-docker-engine:
-        version: 17.05.0-ce
+        version: 17.06.0-ce
         
     - run:
         name: Install docker 1.12
