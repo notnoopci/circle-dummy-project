@@ -9,7 +9,6 @@ jobs:
 
     steps:
       - type: setup-docker-engine
-        reusable: true
         version: 17.05.0-ce
         
       - type: shell
