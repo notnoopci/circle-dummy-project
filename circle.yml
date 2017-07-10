@@ -1,22 +1,13 @@
 version: 2
 jobs:
   build:
-    docker:
-    - image: golang:1.7
+    machine:
+      image: docker-17.06.0-ce
 
-    working_directory: /go/src/github.com/circleci/build-agent
+    working_directory: /tmp
 
     steps:
-    - setup-docker-engine:
-        version: 17.06.0-ce
-        
-    - run:
-        name: Install docker 1.12
-        command: |
-          set -ex
-          curl -L -o /tmp/docker-1.12.3.tgz https://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz
-          tar -xz -C /tmp -f /tmp/docker-1.12.3.tgz
-          mv /tmp/docker/* /usr/bin
-
+    - run: uname -a
     - run : docker info
-    - run : docker info
+    - run : docker version
+    - run: cat /etc/os-release
