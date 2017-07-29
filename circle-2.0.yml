@@ -37,7 +37,7 @@ jobs:
     - image: notnoopci/playground:0.1
     - image: circleci/mysql:5.7.18
 
-  docker_eatmydata::
+  docker_eatmydata:
     <<: *BASE_DOCKER_JOB
     environment:
     - JOB_ID=docker_eatmydata

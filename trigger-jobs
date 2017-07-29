@@ -17,10 +17,10 @@ trigger_2_0_job() {
           https://circleci.com/api/v1/project/notnoopci/circle-dummy-project/tree/sysbench
 }
 
-#trigger_1_0_job
+trigger_1_0_job
 trigger_2_0_job docker_official
-#trigger_2_0_job docker_circleci
-#trigger_2_0_job docker_eatmydata
+trigger_2_0_job docker_circleci
+trigger_2_0_job docker_eatmydata
 trigger_2_0_job machine_official
-#trigger_2_0_job machine_circleci
-#trigger_2_0_job machine_eatmydata
+trigger_2_0_job machine_circleci
+trigger_2_0_job machine_eatmydata
