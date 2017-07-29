@@ -50,7 +50,7 @@ jobs:
     - JOB_ID=docker_official
     steps:
     - checkout
-    - docker run -d 
+    - run: docker run -d 
        -net=host
        -e MYSQL_ALLOW_EMPTY_PASSWORD=true
        -e MYSQL_DATABASE=circle_test
@@ -72,7 +72,7 @@ jobs:
     - JOB_ID=docker_official
     steps:
     - checkout
-    - docker run -net=host -d circleci/mysql:5.7.18
+    - run: docker run -net=host -d circleci/mysql:5.7.18
     - run:
         name: run benchmarks
         command:  make all 2>&1 | tee /tmp/artifacts/sysbench.report
@@ -87,7 +87,7 @@ jobs:
     - JOB_ID=docker_official
     steps:
     - checkout
-    - docker run -net=host -d notnoopci/mysql:5.7.18-eatmydata
+    - run: docker run -net=host -d notnoopci/mysql:5.7.18-eatmydata
     - run:
         name: run benchmarks
         command:  make all 2>&1 | tee /tmp/artifacts/sysbench.report
