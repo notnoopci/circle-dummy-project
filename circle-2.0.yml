@@ -3,6 +3,7 @@ references:
   base_docker_job: &BASE_DOCKER_JOB
     steps:
     - checkout
+    - run: mkdir -p /tmp/artifacts
     - run: dockerize -timeout 60s -wait tcp://localhost:3306
     - run:
         name: run benchmarks
@@ -51,6 +52,7 @@ jobs:
     - JOB_ID=docker_official
     steps:
     - checkout
+    - run: mkdir -p /tmp/artifacts
     - run: docker run -d 
        --net=host
        -e MYSQL_ALLOW_EMPTY_PASSWORD=true
@@ -74,6 +76,7 @@ jobs:
     - JOB_ID=docker_official
     steps:
     - checkout
+    - run: mkdir -p /tmp/artifacts
     - run: docker run --net=host -d circleci/mysql:5.7.18
     - run: sleep 10
     - run:
@@ -90,6 +93,7 @@ jobs:
     - JOB_ID=docker_official
     steps:
     - checkout
+    - run: mkdir -p /tmp/artifacts
     - run: docker run --net=host -d notnoopci/mysql:5.7.18-eatmydata
     - run: sleep 10
     - run:
