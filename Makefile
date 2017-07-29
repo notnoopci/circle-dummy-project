@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 prepare:
 	echo JOB_ID IS $(JOB_ID)
 	echo PUBLIC IP IS $(shell curl ipecho.net/plain)
@@ -12,7 +14,10 @@ cpu:
 	time sysbench --test=cpu --cpu-max-prime=20000 run
 
 ####### io tests
-io_impl:
+# plain
+io_plain: TEST_DIR=io_plain
+io_plain: FILE_SIZE=15
+io_plain:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
@@ -20,35 +25,61 @@ io_impl:
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
-# plain
-io_plain: TEST_DIR=io_plain
-io_plain: FILE_SIZE=15
-io_plain: io_impl
-
 io_plain_eatmydata: TEST_DIR=io_plain_eatmydata
 io_plain_eatmydata: FILE_SIZE=15
 io_plain_eatmydata: COMMAND_PREFIX=eatmydata
-io_plain_eatmydata: io_impl
+io_plain_eatmydata:
+	echo ============= $(TEST_DIR)
+	mkdir -p $(TEST_DIR)
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
 # with docker volume
 io_volume: TEST_DIR=/myvolume/test/io_volume
 io_volume: FILE_SIZE=15
-io_volume: io_impl
+io_volume:
+	echo ============= $(TEST_DIR)
+	mkdir -p $(TEST_DIR)
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
+
 
 io_volume_eatmydata: TEST_DIR=/myvolume/test/io_volume_eatmydata
 io_volume_eatmydata: FILE_SIZE=15
 io_volume_eatmydata: COMMAND_PREFIX=eatmydata
-io_volume_eatmydata: io_impl
+io_volume_eatmydata:
+	echo ============= $(TEST_DIR)
+	mkdir -p $(TEST_DIR)
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
 # with docker volume
 io_volume: TEST_DIR=/dev/shm/io_volume
 io_volume: FILE_SIZE=3
-io_volume: io_impl
+io_volume:
+	echo ============= $(TEST_DIR)
+	mkdir -p $(TEST_DIR)
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
 io_volume_eatmydata: TEST_DIR=/dev/shm/io_volume_eatmydata
 io_volume_eatmydata: FILE_SIZE=3
 io_volume_eatmydata: COMMAND_PREFIX=eatmydata
-io_volume_eatmydata: io_impl
+io_volume_eatmydata:
+	echo ============= $(TEST_DIR)
+	mkdir -p $(TEST_DIR)
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
+	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
 MYSQL_USER=root
 
