@@ -21,7 +21,6 @@ io_plain:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
-	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
@@ -32,7 +31,6 @@ io_plain_eatmydata:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
-	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
@@ -42,7 +40,6 @@ io_volume: FILE_SIZE=15
 io_volume:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
-	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
@@ -55,7 +52,6 @@ io_volume_eatmydata:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
-	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
@@ -66,7 +62,6 @@ io_shm:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
-	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
@@ -76,7 +71,6 @@ io_shm_eatmydata: COMMAND_PREFIX=eatmydata
 io_shm_eatmydata:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
-	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
