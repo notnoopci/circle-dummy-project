@@ -3,7 +3,14 @@ jobs:
   build:
     docker:
     - image: circleci/golang:1.8
-    - image: circleci/mysql:latest
+    - image: mysql:latest
+      environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=circle_test
+      - MYSQL_HOST=127.0.0.1
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=root
+
     environment:
       CIRCLE_ARTIFACTS: /tmp/artifacts
     working_directory: ~/circle-dummy-project
