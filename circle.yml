@@ -10,4 +10,5 @@ test:
   - mkdir -p emd && cd emd && eatmydata ~/circle-dummy-project/sysbench-lio.sh 2>&1 | tee $CIRCLE_ARTIFACTS/io-localdisk-eatmydata.txt
   - mkdir -p /dev/shm/sysbench && cd /dev/shm/sysbench && SIZE=3 ~/circle-dummy-project/sysbench-lio.sh 2>&1 | tee $CIRCLE_ARTIFACTS/io-shm.txt
   - mysql -e 'create database sbtest;'
-  - ./sysbench-mysql.sh 2>&1 | tee $CIRCLE_ARTIFACTS/mysql.txt
+  - ./sysbench-mysql.sh 2>&1 | tee $CIRCLE_ARTIFACTS/mysql.txt:
+      timeout: 3600
