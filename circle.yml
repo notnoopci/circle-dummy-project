@@ -25,7 +25,9 @@ jobs:
     - run: mkdir -p emd && cd emd && eatmydata ~/circle-dummy-project/sysbench-lio.sh 2>&1 | tee $CIRCLE_ARTIFACTS/io-localdisk-eatmydata.txt
     - run: mkdir -p /dev/shm/sysbench && cd /dev/shm/sysbench && SIZE=3 ~/circle-dummy-project/sysbench-lio.sh 2>&1 | tee $CIRCLE_ARTIFACTS/io-shm.txt
     - run: mysql -h 127.0.0.1 -u root -e 'create database sbtest;'
-    - run: MYSQL_USER=root ./sysbench-mysql.sh 2>&1 | tee $CIRCLE_ARTIFACTS/mysql.txt
+    - run:
+        command: MYSQL_USER=root ADDITIONAL_ARGUMENTS="--mysql-host=127.0.0.1" ./sysbench-mysql.sh 2>&1 | tee $CIRCLE_ARTIFACTS/mysql.txt
+        no_output_timeout: 60m
     - store_artifacts:
         path: /tmp/artifacts
         destination: reports
