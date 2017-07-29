@@ -1,0 +1,97 @@
+version: 2.0
+references:
+  base_docker_job: &BASE_DOCKER_JOB
+    steps:
+    - checkout
+    - run:
+        name: run benchmarks
+        command:  make all 2>&1 | tee /tmp/artifacts/sysbench.report
+        no_output_timeout: 1h
+    - store_artifacts:
+        path: /tmp/artifacts
+        destination: artifacts
+
+jobs:
+  ##### DOCKER EXECUTOR
+  docker_official:
+    <<: *BASE_DOCKER_JOB
+    environment:
+    - JOB_ID=docker_official
+    docker:
+    - image: notnoopci/playground:0.1
+    - image: mysql:5.7.18
+      environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=circle_test
+      - MYSQL_HOST=127.0.0.1
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=root
+
+  docker_circleci:
+    <<: *BASE_DOCKER_JOB
+    environment:
+    - JOB_ID=docker_circleci
+    docker:
+    - image: notnoopci/playground:0.1
+    - image: circleci/mysql:5.7.18
+
+  docker_eatmydata::
+    <<: *BASE_DOCKER_JOB
+    environment:
+    - JOB_ID=docker_eatmydata
+    docker:
+    - image: notnoopci/playground:0.1
+    - image: notnoopci/mysql:5.7.18-eatmydata
+
+  ##### MACHINE EXECUTOR
+  machine_official:
+    machine: true
+    environment:
+    - JOB_ID=docker_official
+    steps:
+    - checkout
+    - docker run -d 
+       -net=host
+       -e MYSQL_ALLOW_EMPTY_PASSWORD=true
+       -e MYSQL_DATABASE=circle_test
+       -e MYSQL_HOST=127.0.0.1
+       -e MYSQL_ROOT_HOST=%
+       -e MYSQL_USER=root
+       mysql:5.7.18
+    - run:
+        name: run benchmarks
+        command:  make all 2>&1 | tee /tmp/artifacts/sysbench.report
+        no_output_timeout: 1h
+    - store_artifacts:
+        path: /tmp/artifacts
+        destination: artifacts
+
+  machine_circleci:
+    machine: true
+    environment:
+    - JOB_ID=docker_official
+    steps:
+    - checkout
+    - docker run -net=host -d circleci/mysql:5.7.18
+    - run:
+        name: run benchmarks
+        command:  make all 2>&1 | tee /tmp/artifacts/sysbench.report
+        no_output_timeout: 1h
+    - store_artifacts:
+        path: /tmp/artifacts
+        destination: artifacts
+
+  machine_eatmydata:
+    machine: true
+    environment:
+    - JOB_ID=docker_official
+    steps:
+    - checkout
+    - docker run -net=host -d notnoopci/mysql:5.7.18-eatmydata
+    - run:
+        name: run benchmarks
+        command:  make all 2>&1 | tee /tmp/artifacts/sysbench.report
+        no_output_timeout: 1h
+    - store_artifacts:
+        path: /tmp/artifacts
+        destination: artifacts

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+trigger_1_0_job() {
+  curl -u $(CIRCLE_TOKEN): \
+          -F config=@circle-1.0.yml \
+          -F notify=false \
+          https://circleci.com/api/v1/project/notnoopci/circle-dummy-project/tree/sysbench
+}
+
+trigger_2_0_job() {
+  JOB_ID=$1
+  
+  curl -u $(CIRCLE_TOKEN): \
+          -F config=@circle-2.0.yml \
+          -F notify=false \
+          -F "build_parameters[CIRCLE_JOB]=$JOB_ID" \
+          https://circleci.com/api/v1/project/notnoopci/circle-dummy-project/tree/sysbench
+}
+
+trigger_1_0_job
+trigger_2_0_job docker_official
+trigger_2_0_job docker_circleci
+trigger_2_0_job docker_eatmydata
+trigger_2_0_job machine_official
+trigger_2_0_job machine_circleci
+trigger_2_0_job machine_eatmydata
+

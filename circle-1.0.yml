@@ -1,0 +1,5 @@
+# empty
+test:
+  override:
+  - make all 2>&1 | tee $CIRCLE_ARTIFACTS/sysbench.report:
+      timeout: 3600
