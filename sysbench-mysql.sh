@@ -1,3 +1,4 @@
+#!/bin/bash
 export MYSQL_USER=${MYSQL_USER:-$(whoami)}
 export ADDITIONAL_ARGS=${ADDITIONAL_ARGS:-}
 
