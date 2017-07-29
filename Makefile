@@ -59,10 +59,10 @@ io_volume_eatmydata:
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
-# with docker volume
-io_volume: TEST_DIR=/dev/shm/io_volume
-io_volume: FILE_SIZE=3
-io_volume:
+# with memory
+io_shm: TEST_DIR=/dev/shm/io_volume
+io_shm: FILE_SIZE=3
+io_shm:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
@@ -70,10 +70,10 @@ io_volume:
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G --file-test-mode=rndrw --init-rng=on --max-time=300 --max-requests=0 run
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G cleanup
 
-io_volume_eatmydata: TEST_DIR=/dev/shm/io_volume_eatmydata
-io_volume_eatmydata: FILE_SIZE=3
-io_volume_eatmydata: COMMAND_PREFIX=eatmydata
-io_volume_eatmydata:
+io_shm_eatmydata: TEST_DIR=/dev/shm/io_volume_eatmydata
+io_shm_eatmydata: FILE_SIZE=3
+io_shm_eatmydata: COMMAND_PREFIX=eatmydata
+io_shm_eatmydata:
 	echo ============= $(TEST_DIR)
 	mkdir -p $(TEST_DIR)
 	cd $(TEST_DIR); time $(COMMAND_PREFIX) sysbench --test=fileio --file-total-size=$(FILE_SIZE)G prepare
@@ -83,7 +83,7 @@ io_volume_eatmydata:
 
 MYSQL_USER=root
 
-io: io_plain io_plain_eatmydata io_volume io_volume_eatmydata io_volume io_volume_eatmydata
+io: io_plain io_plain_eatmydata io_volume io_volume_eatmydata io_shm io_shm_eatmydata
 
 ####### MySQL tests
 mysql:
