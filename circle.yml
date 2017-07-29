@@ -1,1 +1,12 @@
 # empty
+dependencies:
+  override:
+  - sudo apt-get update; sudo apt-get install -y eatmydata sysbench
+
+test:
+  override:
+  - ./sysbench-cpu.sh 2>&1 | tee $CIRCLE_ARTIFACTS/cpu.txt
+  - mkdir -p io && cd io && ./sysbench-io.sh 2>&1 | tee $CIRCLE_ARTIFACTS/localdisk-io.txt
+  - mkdir -p emd && cd emd && eatmydata ./sysbench-io.sh 2>&1 | tee $CIRCLE_ARTIFACTS/localdisk-eatmydata-io.txt
+  - mysql -e 'create database sbtest;'
+  - ./sysbench-mysql.sh 2>&1 | tee $CIRCLE_ARTIFACTS/mysql.txt
