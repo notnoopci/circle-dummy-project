@@ -1,7 +1,8 @@
 version: 2
 jobs:
   build:
-    machine: true
+    machine:
+      image: circleci/classic:201707-02
     working_directory: /tmp
 
     steps:
