@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     machine:
-     image: circleci/classic:201709-01
+     image: default
 
     working_directory: /tmp
 
