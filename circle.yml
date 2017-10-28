@@ -1,4 +1,5 @@
 version: 2
+build_agent: picard:0.0.4483-5fcaf68
 jobs:
   build:
     machine:
