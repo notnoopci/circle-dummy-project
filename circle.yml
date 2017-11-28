@@ -1,15 +1,14 @@
 version: 2
-build_agent: picard:0.0.4483-5fcaf68
 jobs:
   build:
     machine:
-     image: default
+     image: circleci/classic:201711-01
 
     working_directory: /tmp
 
     steps:
-    - run: sudo apt-get update
     - run: uname -a
     - run : docker info
     - run : docker version
     - run: cat /etc/os-release
+    - run: docker-compose --version
