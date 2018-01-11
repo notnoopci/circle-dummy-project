@@ -1,7 +1,9 @@
 version: 2
+build_agent: picard:0.0.0-780c974
 jobs:
   build:
-    machine: true
+    machine:
+      image: circleci/classic:201703-01
     working_directory: /tmp
 
     steps:
