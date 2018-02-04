@@ -1,5 +1,5 @@
 version: 2
-jobs:
+jobs
   build:
     machine:
       image: circleci/classic:201703-01
