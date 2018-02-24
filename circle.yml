@@ -1,10 +1,8 @@
 version: 2
-jobs
+jobs:
   build:
-    machine:
-      image: circleci/classic:201703-01
+    machine: true
     working_directory: /tmp
-
     steps:
     - run: uname -a
     - run : docker info
